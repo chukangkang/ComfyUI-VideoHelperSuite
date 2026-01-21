@@ -1,0 +1,29 @@
+[project]
+name = "comfyui-videohelpersuite"
+description = "Nodes related to video workflows"
+version = "1.7.9"
+license = { file = "LICENSE" }
+dependencies = ["opencv-python", "imageio-ffmpeg"]
+requires-python = ">=3.8"
+readme = "README.md"
+keywords = ["comfyui", "video", "processing", "nodes"]
+
+[project.urls]
+Repository = "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+Issues = "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/issues"
+Changelog = "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/releases"
+
+#  Used by Comfy Registry https://comfyregistry.org
+[tool.comfy]
+PublisherId = "kosinkadink"
+DisplayName = "ComfyUI-VideoHelperSuite"
+Icon = ""
+Version = "1.7.9"
+ComfyUIMinimumVersion = "0.8.0"
+ComfyUITestedVersion = "0.9.2"
+
+[tool.comfy.compatibility]
+"0.9.2" = "full"
+"0.9.1" = "partial"
+"0.9.0" = "partial"
+"0.8.0" = "partial"

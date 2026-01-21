@@ -1,0 +1,170 @@
+{
+  "extension": {
+    "name": "ComfyUI-VideoHelperSuite",
+    "version": "1.7.9",
+    "publisher": "kosinkadink",
+    "description": "Nodes related to video workflows"
+  },
+  "comfyui": {
+    "minimumVersion": "0.8.0",
+    "testedVersions": [
+      "0.9.2",
+      "0.9.1",
+      "0.9.0",
+      "0.8.2",
+      "0.8.1",
+      "0.8.0"
+    ],
+    "compatibility": {
+      "0.9.2": {
+        "status": "full",
+        "notes": "Fully tested and supported",
+        "features": [
+          "6-element prompt queue",
+          "Modern ProgressBar API",
+          "Enhanced async server routes",
+          "Strict type validation"
+        ]
+      },
+      "0.9.1": {
+        "status": "partial",
+        "notes": "Backward compatible with minor limitations",
+        "features": [
+          "6-element prompt queue support",
+          "Legacy ProgressBar API support"
+        ]
+      },
+      "0.9.0": {
+        "status": "partial",
+        "notes": "Backward compatible",
+        "features": [
+          "5 and 6-element prompt queue support"
+        ]
+      },
+      "0.8.x": {
+        "status": "partial",
+        "notes": "Basic compatibility with some feature limitations",
+        "features": [
+          "5-element prompt queue",
+          "Legacy API support"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "python": ">=3.8",
+    "packages": [
+      {
+        "name": "opencv-python",
+        "purpose": "Video frame extraction and image processing"
+      },
+      {
+        "name": "imageio-ffmpeg",
+        "purpose": "FFmpeg wrapper for video processing"
+      },
+      {
+        "name": "torch",
+        "purpose": "Tensor operations (installed via ComfyUI)",
+        "optional": false
+      },
+      {
+        "name": "Pillow",
+        "purpose": "Image processing (installed via ComfyUI)",
+        "optional": false
+      }
+    ]
+  },
+  "features": {
+    "nodes": [
+      {
+        "class": "VideoCombine",
+        "type": "Output",
+        "category": "Video Helper Suite 🎥🅥🅗🅢",
+        "description": "Combines image sequences into video files"
+      },
+      {
+        "class": "LoadVideo",
+        "type": "Input",
+        "category": "Video Helper Suite 🎥🅥🅗🅢",
+        "description": "Loads video files into image sequences"
+      },
+      {
+        "class": "LoadAudio",
+        "type": "Input",
+        "category": "Video Helper Suite 🎥🅥🅗🅢/audio",
+        "description": "Loads audio files for processing"
+      },
+      {
+        "class": "BatchManager",
+        "type": "Utility",
+        "category": "Video Helper Suite 🎥🅥🅗🅢",
+        "description": "Manages batch operations across nodes"
+      }
+    ],
+    "videoFormats": [
+      "h264-mp4",
+      "h265-mp4",
+      "av1-webm",
+      "vp9-webm",
+      "ProRes",
+      "ffv1-mkv",
+      "8bit-png",
+      "16bit-png",
+      "gif",
+      "webp"
+    ]
+  },
+  "apiChanges": {
+    "ComfyUI0.9.2": [
+      {
+        "change": "Prompt queue structure",
+        "oldFormat": "(number, prompt_id, prompt, extra_data, outputs_to_execute)",
+        "newFormat": "(number, prompt_id, prompt, extra_data, outputs_to_execute, sensitive)",
+        "handledIn": "videohelpersuite/utils.py - requeue_workflow()",
+        "backward_compatible": true
+      },
+      {
+        "change": "ProgressBar API",
+        "oldMethods": [
+          "pbar.update(step)",
+          "pbar.update_absolute(current, total)"
+        ],
+        "newMethods": [
+          "pbar.update(step)",
+          "pbar.update_absolute(current, total)"
+        ],
+        "handledIn": "videohelpersuite/nodes.py - VideoCombine, load_video_nodes.py",
+        "backward_compatible": true
+      },
+      {
+        "change": "Server route decorators",
+        "pattern": "@server.PromptServer.instance.routes.get(path)",
+        "handledIn": "videohelpersuite/server.py",
+        "backward_compatible": true
+      }
+    ]
+  },
+  "testing": {
+    "unitTests": "tests/",
+    "workflowTests": [
+      "tests/simple.json",
+      "tests/audio.json",
+      "tests/batch4x4.json",
+      "tests/loop.json"
+    ]
+  },
+  "known_issues": [],
+  "changelog": {
+    "1.7.9": {
+      "date": "2025-01-21",
+      "changes": [
+        "Added full support for ComfyUI 0.9.2",
+        "Enhanced prompt queue structure handling",
+        "Improved version detection and compatibility logging",
+        "Added compatibility documentation",
+        "Verified all node type definitions for 0.9.2 compliance",
+        "Updated pyproject.toml with version metadata"
+      ]
+    }
+  }
+}
